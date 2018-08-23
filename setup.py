@@ -30,7 +30,7 @@ setup(
         install_requires=install_requires,
         setup_requires=setup_requires,
         tests_requires=tests_requires,
-        extras_requre={
+        extras_require={
                 'test': tests_requires,
                 'doc': docs_requires,
         },
