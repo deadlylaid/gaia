@@ -1,7 +1,7 @@
 SHELL=/bin/bash -e
 
 
-test:
+gaia_test:
 	pytest --cov=gaia --cov-report=term-missing
 
 install:

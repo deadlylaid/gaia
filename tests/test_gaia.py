@@ -6,5 +6,5 @@ from gaia import gaia
 
 def test_hello_world():
     runner = CliRunner()
-    runner.invoke(gaia.cli)
-    assert 1==1
+    result = runner.invoke(gaia.cli)
+    assert result.output == 'Hello World!\n'
