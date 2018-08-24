@@ -18,7 +18,8 @@ tests_requires = [
 ]
 
 docs_requires = [
-        'sphinx'
+        'sphinx',
+        'codecov',
 ]
 
 setup(
