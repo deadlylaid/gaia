@@ -11,6 +11,7 @@ install:
 
 script:
 - pytest --cov=gaia --cov-report=term-missing
+- codecov
 
 notifications:
   slack:
