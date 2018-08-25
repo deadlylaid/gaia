@@ -1,0 +1,6 @@
+gaia
+============
+
+.. toctree::
+
+   gaia.gaia
