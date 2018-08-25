@@ -5,4 +5,21 @@
 [![GitHub license](https://img.shields.io/github/license/deadlylaid/gaia.svg)](https://github.com/deadlylaid/gaia/blob/develop/LICENSE)
 [![codecov](https://codecov.io/gh/deadlylaid/gaia/branch/develop/graph/badge.svg)](https://codecov.io/gh/deadlylaid/gaia)
 
-AWS log finder
+
+
+Gaia can help you find AWS logs easily
+
+
+
+### Contribute
+
+If someone wants to contribute to Gaia, follow this process
+
+```
+python -m venv boot
+source boot/bin/activate
+pip install --upgrade setuptools pip
+pip install -e .[test,doc]
+cd docs; make html; open _build/html/index.html
+```
+
