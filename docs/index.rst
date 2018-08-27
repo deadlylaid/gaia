@@ -8,8 +8,12 @@ Gaia - AWS log finder
 
 Version |version|.
 
-Code
-================================
+.. toctree::
+   :maxdepth: 2
+   :numbered:
+
+   config
+
 .. toctree::
    :maxdepth: 2
 
