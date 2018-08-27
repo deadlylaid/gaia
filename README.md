@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/deadlylaid/gaia.svg?branch=develop)](https://travis-ci.org/deadlylaid/gaia)
 [![GitHub license](https://img.shields.io/github/license/deadlylaid/gaia.svg)](https://github.com/deadlylaid/gaia/blob/develop/LICENSE)
 [![codecov](https://codecov.io/gh/deadlylaid/gaia/branch/develop/graph/badge.svg)](https://codecov.io/gh/deadlylaid/gaia)
+[![Documentation Status](https://readthedocs.org/projects/gaia-aws-logfinder/badge/?version=latest)](https://gaia-aws-logfinder.readthedocs.io/en/latest/?badge=latest)
 
 
 
