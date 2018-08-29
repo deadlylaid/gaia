@@ -11,7 +11,8 @@ def setup_module(module):
     shutil.copyfile('tests/gaia_conf.json.test', 'gaia_conf.json')
 
 def teardown_module(module):
-    os.rename('gaia_conf.json.real', 'gaia_conf.json')
+    if os.path.isfile('gaia_conf.json.real'):
+        os.rename('gaia_conf.json.real', 'gaia_conf.json')
 
 
 @pytest.mark.parametrize('bucket',(
