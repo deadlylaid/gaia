@@ -8,6 +8,7 @@ install_requires = [
         'click',
         'awscli',
         'boto3',
+        'botocore',
         'pathlib',
 ]
 
