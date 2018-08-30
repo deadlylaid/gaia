@@ -9,6 +9,7 @@ install_requires = [
         'awscli',
         'boto3',
         'pathlib',
+        'awscli',
 ]
 
 tests_requires = [
