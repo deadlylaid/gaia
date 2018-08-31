@@ -27,7 +27,7 @@ def test_find(mock_resource, bucket, bucket_exist):
     os.system('rm -rf logs')
 
     runner = CliRunner()
-    result = runner.invoke(gaia.cli, ['find', bucket])
+    runner.invoke(gaia.cli, ['find', bucket])
     path = 'logs/' + bucket
 
     assert os.path.isdir(path) == True

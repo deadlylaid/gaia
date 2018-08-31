@@ -8,12 +8,12 @@ import os
 @click.group()
 def cli():
     os.system('rm -rf logs')
-    pass
 
 
 @cli.command()
 @click.argument('bucket_name')
-def find(bucket_name):
+@click.argument('keyword')
+def find(bucket_name, keyworkd):
     try:
         with open('gaia_conf.json') as f:
             config = json.load(f)
@@ -22,7 +22,9 @@ def find(bucket_name):
 
     if not os.path.isdir('logs'):
         os.mkdir('logs')
-    os.mkdir('logs/' + bucket_name)
+
+    log_dir = 'logs/' + bucket_name + '/'
+    os.mkdir(log_dir)
 
     try:
         bucket_path = config['BUCKET_PATH'][bucket_name]
@@ -34,9 +36,15 @@ def find(bucket_name):
 
     try:
         for object in bucket.objects.filter(Prefix=bucket_path):
-            print(object)
+            is_file = object.key.split('/')[-1]
+            if is_file:
+                bucket.download_file(object.key, log_dir + object.key.split('/')[-1])
     except botocore.exceptions.NoCredentialsError:
         raise NoCredentialError
+
+
+def _finder(keyword):
+    raise NotImplementedError
 
 
 class NoCredentialError(botocore.exceptions.NoCredentialsError):
