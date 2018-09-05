@@ -42,11 +42,22 @@ def find(bucket_name, keyword):
     except botocore.exceptions.NoCredentialsError:
         raise NoCredentialError
 
-    click.echo(keyword)
+    log = (_log_finder(log_dir, keyword))
+    click.echo(log)
 
 
-def _finder(keyword):
-    raise NotImplementedError
+def _log_reader(log_dir):
+    for file in os.listdir(log_dir):
+        with open(log_dir + file) as logs:
+            for log in logs:
+                yield log
+
+
+def _log_finder(log_dir, keyword):
+    for log in _log_reader(log_dir):
+        if keyword in log:
+            return log
+        return False
 
 
 class NoCredentialError(botocore.exceptions.NoCredentialsError):
