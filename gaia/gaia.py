@@ -13,7 +13,7 @@ def cli():
 @cli.command()
 @click.argument('bucket_name')
 @click.argument('keyword')
-def find(bucket_name):
+def find(bucket_name, keyword):
     try:
         with open('gaia_conf.json') as f:
             config = json.load(f)
