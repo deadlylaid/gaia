@@ -13,7 +13,7 @@ def cli():
 @cli.command()
 @click.argument('bucket_name')
 @click.argument('keyword')
-def find(bucket_name, keyworkd):
+def find(bucket_name):
     try:
         with open('gaia_conf.json') as f:
             config = json.load(f)
@@ -41,6 +41,8 @@ def find(bucket_name, keyworkd):
                 bucket.download_file(object.key, log_dir + object.key.split('/')[-1])
     except botocore.exceptions.NoCredentialsError:
         raise NoCredentialError
+
+    click.echo(keyword)
 
 
 def _finder(keyword):

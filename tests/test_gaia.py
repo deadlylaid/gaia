@@ -19,8 +19,8 @@ def teardown_module(module):
 
 
 @pytest.mark.parametrize('bucket, bucket_exist', (
-        ('s3', True),
-        ('undefined', False)
+        ('s3', 'keyword',True),
+        ('undefined', 'keyword',False)
 ))
 @mock.patch('boto3.resource')
 def test_find(mock_resource, bucket, bucket_exist):
