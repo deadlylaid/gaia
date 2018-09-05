@@ -105,3 +105,9 @@ venv.bak/
 
 # pycharm
 .idea/*
+
+# gaia_conf.json
+gaia_conf.json
+
+# logs
+logs/
