@@ -4,6 +4,8 @@ import click
 import json
 import os
 
+from .errors import NoCredentialError
+
 
 @click.group()
 def cli():
@@ -29,7 +31,7 @@ def find(bucket_name, keyword):
     try:
         bucket_path = config['BUCKET_PATH'][bucket_name]
     except KeyError:
-        raise KeyError(bucket_name + ' is not in gaia_conf.json')
+        raise KeyError(bucket_name + ' is invalid key please check gaia_conf.json')
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(bucket_name)
@@ -58,7 +60,3 @@ def _log_finder(log_dir, keyword):
         if keyword in log:
             return log
         return False
-
-
-class NoCredentialError(botocore.exceptions.NoCredentialsError):
-    fmt = "please create credential in `~/.aws/` Referer - https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html"
