@@ -1,3 +1,4 @@
+import ast
 import pytest
 import mock
 import os
@@ -19,8 +20,8 @@ def teardown_module(module):
 
 
 @pytest.mark.parametrize('bucket, keyword, bucket_exist', (
-        ('s3', 'keyword',True),
-        ('undefined', 'keyword',False)
+        ('s3', 'keyword', True),
+        ('undefined', 'keyword', False)
 ))
 @mock.patch('boto3.resource')
 def test_find(mock_resource, bucket, keyword, bucket_exist):
@@ -33,3 +34,9 @@ def test_find(mock_resource, bucket, keyword, bucket_exist):
     assert os.path.isdir(path) == True
     if bucket_exist:
         assert mock_resource.called
+
+
+def test_log_finder():
+    result = gaia._log_finder('tests/logs/', 'd2Rd8fpbRE2toz8KOPD_zA')
+    result = ast.literal_eval(result)
+    assert result['uid'] == "d2Rd8fpbRE2toz8KOPD_zA"
