@@ -37,6 +37,6 @@ def test_find(mock_resource, bucket, keyword, bucket_exist):
 
 
 def test_log_finder():
-    result = gaia._log_finder('tests/logs/', 'd2Rd8fpbRE2toz8KOPD_zA')
+    result = gaia._log_finder('tests/test_logs/', 'd2Rd8fpbRE2toz8KOPD_zA')
     result = ast.literal_eval(result)
     assert result['uid'] == "d2Rd8fpbRE2toz8KOPD_zA"
