@@ -50,7 +50,8 @@ def find(bucket_name, keyword):
 
 def _log_reader(log_dir):
     for file in os.listdir(log_dir):
-        with open(log_dir + file) as logs:
+        opend_file = open(log_dir + file)
+        with opend_file as logs:
             for log in logs:
                 yield log
 
