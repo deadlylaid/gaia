@@ -1,8 +1,10 @@
 import boto3
 import botocore
 import click
+import gzip
 import json
 import os
+import zipfile
 
 from .errors import NoCredentialError
 
@@ -50,7 +52,11 @@ def find(bucket_name, keyword):
 
 def _log_reader(log_dir):
     for file in os.listdir(log_dir):
-        opend_file = open(log_dir + file)
+        extension = file.split('.')[-1]
+        if extension in ['gz']:
+            opend_file = gzip.open(log_dir + file)
+        else:
+            opend_file = open(log_dir + file)
         with opend_file as logs:
             for log in logs:
                 yield log
@@ -58,6 +64,8 @@ def _log_reader(log_dir):
 
 def _log_finder(log_dir, keyword):
     for log in _log_reader(log_dir):
+        if type(log) is not str:
+            log = log.decode()
         if keyword in log:
             return log
         return False
