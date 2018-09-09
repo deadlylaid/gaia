@@ -1,6 +1,5 @@
 {
   "BUCKET_PATH":{
-    // Insert Your Buacket Path Like
-    // "worker_log" : "worker/second/logs"
+    "Bucket_Name" : "S3/path"
   }
 }
