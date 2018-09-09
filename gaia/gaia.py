@@ -4,7 +4,6 @@ import click
 import gzip
 import json
 import os
-import zipfile
 
 from .errors import NoCredentialError
 
@@ -42,6 +41,7 @@ def find(bucket_name, keyword):
         for object in bucket.objects.filter(Prefix=bucket_path):
             is_file = object.key.split('/')[-1]
             if is_file:
+                click.echo(is_file + ' downloading...')
                 bucket.download_file(object.key, log_dir + object.key.split('/')[-1])
     except botocore.exceptions.NoCredentialsError:
         raise NoCredentialError
@@ -52,6 +52,7 @@ def find(bucket_name, keyword):
 
 def _log_reader(log_dir):
     for file in os.listdir(log_dir):
+        click.echo(file + ' reading...')
         extension = file.split('.')[-1]
         if extension in ['gz']:
             opend_file = gzip.open(log_dir + file)
@@ -68,4 +69,4 @@ def _log_finder(log_dir, keyword):
             log = log.decode()
         if keyword in log:
             return log
-        return False
+    return "keyword does not exist"
