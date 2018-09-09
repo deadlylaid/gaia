@@ -13,11 +13,7 @@ Version |version|.
    :numbered:
 
    config
-
-.. toctree::
-   :maxdepth: 2
-
-   gaia
+   command
 
 Indices and tables
 ==================
