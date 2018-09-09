@@ -36,7 +36,11 @@ def test_find(mock_resource, bucket, keyword, bucket_exist):
         assert mock_resource.called
 
 
-def test_log_finder():
-    result = gaia._log_finder('tests/test_logs/', 'd2Rd8fpbRE2toz8KOPD_zA')
+@pytest.mark.parametrize('keyword', (
+        ('d2Rd8fpbRE2toz8KOPD_zA'),
+        ('rTESTUJqQlKq55tjXdNoEA')
+))
+def test_log_finder(keyword):
+    result = gaia._log_finder('tests/test_logs/', keyword)
     result = ast.literal_eval(result)
-    assert result['uid'] == "d2Rd8fpbRE2toz8KOPD_zA"
+    assert result['uid'] == keyword
