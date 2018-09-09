@@ -1,0 +1,5 @@
+{
+  "BUCKET_PATH":{
+    "s3":"aws/log/finder"
+  }
+}
