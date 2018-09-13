@@ -14,6 +14,13 @@ def cli():
 
 
 @cli.command()
+def gen():
+    if not os.path.isfile('gaia_conf.json'):
+        with open('gaia_conf.json', 'w') as f:
+            json.dump({"BUCKET_PATH":{}}, f)
+            click.echo('gaia_conf.json file generated')
+
+@cli.command()
 @click.argument('bucket_name')
 @click.argument('keyword')
 def find(bucket_name, keyword):
@@ -21,7 +28,7 @@ def find(bucket_name, keyword):
         with open('gaia_conf.json') as f:
             config = json.load(f)
     except FileNotFoundError:
-        raise FileNotFoundError("gaia_conf.json file doesn't exist, create gaia_conf.json in root directory")
+        raise FileNotFoundError("gaia_conf.json file doesn't exist, run `gaia gen` ")
 
     if not os.path.isdir('logs'):
         os.mkdir('logs')
