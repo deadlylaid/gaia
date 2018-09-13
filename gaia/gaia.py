@@ -14,11 +14,21 @@ def cli():
 
 
 @cli.command()
-def gen():
+@click.argument('bucket_name')
+@click.argument('path')
+def gen(bucket_name, path):
     if not os.path.isfile('gaia_conf.json'):
         with open('gaia_conf.json', 'w') as f:
             json.dump({"BUCKET_PATH":{}}, f)
             click.echo('gaia_conf.json file generated')
+
+    with open('gaia_conf.json') as f:
+        data = json.load(f)
+
+    data['BUCKET_PATH'].update({bucket_name:path})
+
+    with open('gaia_conf.json', 'w') as f:
+        json.dump(data,f)
 
 @cli.command()
 @click.argument('bucket_name')
