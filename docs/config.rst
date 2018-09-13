@@ -1,8 +1,8 @@
 Config
 ======
 
-``gaia_conf.json``
-------------------
+gaia_conf.json
+--------------
 
 ``./gaia_conf.json`` 파일은 S3 Bucket Path를 저장하는데 사용됩니다.
 json 형태의 key, value 값을 통해서 key는 bucket name을, value는 bucket name을 제외한 S3 경로를 입력합니다.

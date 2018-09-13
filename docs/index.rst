@@ -10,7 +10,6 @@ Version |version|.
 
 .. toctree::
    :maxdepth: 2
-   :numbered:
 
    config
    command
