@@ -35,6 +35,8 @@ def test_find(mock_resource, bucket, keyword, bucket_exist):
     assert os.path.isdir(path) == True
     if bucket_exist:
         assert mock_resource.called
+    else:
+        assert mock_resource.called == False
 
 
 @pytest.mark.parametrize('keyword', (
