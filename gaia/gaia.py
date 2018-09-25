@@ -1,6 +1,7 @@
 import boto3
 import botocore
 import click
+import dateutil
 import gzip
 import json
 import os
@@ -19,15 +20,16 @@ def cli():
 def gen(bucket_name, path):
     if not os.path.isfile('gaia_conf.json'):
         with open('gaia_conf.json', 'w') as f:
-            json.dump({"BUCKET_PATH":{}}, f)
+            json.dump({"BUCKET_PATH": {}}, f)
             click.echo('gaia_conf.json file generated')
 
     if bucket_name is not '0' and path is not '0':
         with open('gaia_conf.json') as f:
             data = json.load(f)
-        data['BUCKET_PATH'].update({bucket_name:path})
+        data['BUCKET_PATH'].update({bucket_name: path})
         with open('gaia_conf.json', 'w') as f:
-            json.dump(data,f)
+            json.dump(data, f)
+
 
 @cli.command()
 @click.argument('bucket_name')
@@ -86,3 +88,8 @@ def _log_finder(log_dir, keyword):
         if keyword in log:
             return log
     return "keyword does not exist"
+
+
+def _time_calculator(time):
+    time = dateutil.parser.parse(time)
+    return time

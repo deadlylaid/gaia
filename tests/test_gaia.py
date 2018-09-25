@@ -26,8 +26,6 @@ def teardown_module(module):
 ))
 @mock.patch('boto3.resource')
 def test_find(mock_resource, bucket, keyword, bucket_exist):
-    os.system('rm -rf logs')
-
     runner = CliRunner()
     runner.invoke(gaia.cli, ['find', bucket, keyword])
     path = 'logs/' + bucket
@@ -58,3 +56,17 @@ def test_gen():
     with open('gaia_conf.json') as f:
         data = json.load(f)
     assert data == {'BUCKET_PATH': {'testbucket': 'testpath'}}
+
+
+@pytest.mark.parametrize('time, year, month, day, hour, minute, second', (
+        ('2018-09-11', 2018, 9, 11, 0, 0, 0),
+        ('2017-11-02T15:12:24', 2017, 11, 2, 15, 12, 24)
+))
+def test_time_calculator(time, year, month, day, hour, minute, second):
+    result = gaia._time_calculator(time)
+    assert result.year == year
+    assert result.month == month
+    assert result.day == day
+    assert result.hour == hour
+    assert result.minute == minute
+    assert result.second == second
