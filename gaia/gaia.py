@@ -1,9 +1,12 @@
 import boto3
 import botocore
 import click
+import dateutil
 import gzip
 import json
 import os
+
+from datetime import datetime
 
 from .errors import NoCredentialError
 
@@ -19,20 +22,22 @@ def cli():
 def gen(bucket_name, path):
     if not os.path.isfile('gaia_conf.json'):
         with open('gaia_conf.json', 'w') as f:
-            json.dump({"BUCKET_PATH":{}}, f)
+            json.dump({"BUCKET_PATH": {}}, f)
             click.echo('gaia_conf.json file generated')
 
     if bucket_name is not '0' and path is not '0':
         with open('gaia_conf.json') as f:
             data = json.load(f)
-        data['BUCKET_PATH'].update({bucket_name:path})
+        data['BUCKET_PATH'].update({bucket_name: path})
         with open('gaia_conf.json', 'w') as f:
-            json.dump(data,f)
+            json.dump(data, f)
+
 
 @cli.command()
 @click.argument('bucket_name')
 @click.argument('keyword')
-def find(bucket_name, keyword):
+@click.option('--time', '-t', default=datetime.utcnow(), help='UTC time like "1990-01-01T12:00:00"')
+def find(bucket_name, keyword, time):
     try:
         with open('gaia_conf.json') as f:
             config = json.load(f)
@@ -50,6 +55,8 @@ def find(bucket_name, keyword):
     except KeyError:
         raise KeyError(bucket_name + ' is invalid key please check gaia_conf.json')
 
+    bucket_path = _bucket_path(time, bucket_path)
+
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(bucket_name)
 
@@ -62,7 +69,7 @@ def find(bucket_name, keyword):
     except botocore.exceptions.NoCredentialsError:
         raise NoCredentialError
 
-    log = (_log_finder(log_dir, keyword))
+    log = _log_finder(log_dir, keyword)
     click.echo(log)
 
 
@@ -86,3 +93,18 @@ def _log_finder(log_dir, keyword):
         if keyword in log:
             return log
     return "keyword does not exist"
+
+
+def _bucket_path(time, bucket_path):
+    time = dateutil.parser.parse(time)
+    time = {
+        '<YY>': '{:02d}'.format(time.year),
+        '<MM>': '{:02d}'.format(time.month),
+        '<DD>': '{:02d}'.format(time.day),
+        '<HH>': '{:02d}'.format(time.hour),
+        '<MI>': '{:02d}'.format(time.minute),
+        '<SC>': '{:02d}'.format(time.second)
+    }
+    for k, v in time.items():
+        bucket_path = bucket_path.replace(k, v)
+    return bucket_path
