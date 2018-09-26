@@ -1,5 +1,5 @@
 {
   "BUCKET_PATH":{
-    "Bucket_Name" : "S3/path"
+    "Bucket_Name" : "S3/path/<YY>/<MM>/<DD>/<HH>/<MI>/<SE>"
   }
 }

@@ -20,14 +20,14 @@ def teardown_module(module):
         os.rename('gaia_conf.json.real', 'gaia_conf.json')
 
 
-@pytest.mark.parametrize('bucket, keyword, bucket_exist', (
-        ('s3', 'keyword', True),
-        ('undefined', 'keyword', False)
+@pytest.mark.parametrize('bucket, keyword, bucket_exist, time', (
+        ('s3', 'keyword', True, '2018-09-19'),
+        ('undefined', 'keyword', False, '2018-09-09')
 ))
 @mock.patch('boto3.resource')
-def test_find(mock_resource, bucket, keyword, bucket_exist):
+def test_find(mock_resource, bucket, keyword, bucket_exist, time):
     runner = CliRunner()
-    runner.invoke(gaia.cli, ['find', bucket, keyword])
+    runner.invoke(gaia.cli, ['find', '--time', time, bucket, keyword])
     path = 'logs/' + bucket
 
     assert os.path.isdir(path) == True
@@ -58,15 +58,10 @@ def test_gen():
     assert data == {'BUCKET_PATH': {'testbucket': 'testpath'}}
 
 
-@pytest.mark.parametrize('time, year, month, day, hour, minute, second', (
-        ('2018-09-11', 2018, 9, 11, 0, 0, 0),
-        ('2017-11-02T15:12:24', 2017, 11, 2, 15, 12, 24)
+@pytest.mark.parametrize('time, bucket_path, path_result', (
+        ('2018-09-11', "path/<YY>/<MM>/<DD>", "path/2018/09/11"),
+        ('2017-11-02T15:12:24', "path/<YY>/<MM>/<DD>/<HH>/<MI>/<SC>", "path/2017/11/02/15/12/24")
 ))
-def test_time_calculator(time, year, month, day, hour, minute, second):
-    result = gaia._time_calculator(time)
-    assert result.year == year
-    assert result.month == month
-    assert result.day == day
-    assert result.hour == hour
-    assert result.minute == minute
-    assert result.second == second
+def test_bucket_path(time, bucket_path, path_result):
+    result = gaia._bucket_path(time, bucket_path)
+    assert result == path_result
