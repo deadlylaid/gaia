@@ -25,7 +25,7 @@ docs_requires = [
 ]
 
 setup(
-        name='gaia',
+        name='gaia-finder',
         version=open('VERSION').read().strip(),
         url='https://github.com/deadlylaid/gaia',
         author_email='deadlylaid@gmail.com',
