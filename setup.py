@@ -16,15 +16,16 @@ tests_requires = [
         'pytest',
         'mock',
         'pytest-cov',
+        'codecov',
 ]
 
 docs_requires = [
         'sphinx',
-        'codecov',
+        'sphinx_rtd_theme',
 ]
 
 setup(
-        name='gaia',
+        name='gaia-finder',
         version=open('VERSION').read().strip(),
         url='https://github.com/deadlylaid/gaia',
         author_email='deadlylaid@gmail.com',
