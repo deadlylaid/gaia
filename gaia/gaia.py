@@ -35,9 +35,10 @@ def gen(bucket_name, path):
 
 @cli.command()
 @click.argument('bucket_name')
+@click.argument('folder')
 @click.argument('keyword')
 @click.option('--time', '-t', default=datetime.utcnow(), help='UTC time like "1990-01-01T12:00:00"')
-def find(bucket_name, keyword, time):
+def find(bucket_name, folder, keyword, time):
     try:
         with open('gaia_conf.json') as f:
             config = json.load(f)
@@ -51,7 +52,7 @@ def find(bucket_name, keyword, time):
     os.mkdir(log_dir)
 
     try:
-        bucket_path = config['BUCKET_PATH'][bucket_name]
+        bucket_path = config['BUCKET_PATH'][bucket_name][folder]
     except KeyError:
         raise KeyError(bucket_name + ' is invalid key please check gaia_conf.json')
 
@@ -96,7 +97,8 @@ def _log_finder(log_dir, keyword):
 
 
 def _bucket_path(time, bucket_path):
-    time = dateutil.parser.parse(time)
+    if isinstance(time, str):
+        time = dateutil.parser.parse(time)
     time = {
         '<YY>': '{:02d}'.format(time.year),
         '<MM>': '{:02d}'.format(time.month),
