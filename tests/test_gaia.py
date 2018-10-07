@@ -20,14 +20,16 @@ def teardown_module(module):
         os.rename('gaia_conf.json.real', 'gaia_conf.json')
 
 
-@pytest.mark.parametrize('bucket, keyword, bucket_exist, time', (
-        ('s3', 'keyword', True, '2018-09-19'),
-        ('undefined', 'keyword', False, '2018-09-09')
+@pytest.mark.parametrize('bucket, folder, keyword, bucket_exist, time', (
+        ('s3', 'folder', 'keyword', True, '2018-09-19'),
+        ('s3', 'folder', 'keyword', True, None),
+        ('undefined', 'undifined', 'keyword', False, '2018-09-09'),
+        ('undefined', 'undifined', 'keyword', False, None),
 ))
 @mock.patch('boto3.resource')
-def test_find(mock_resource, bucket, keyword, bucket_exist, time):
+def test_find(mock_resource, bucket, folder, keyword, bucket_exist, time):
     runner = CliRunner()
-    runner.invoke(gaia.cli, ['find', '--time', time, bucket, keyword])
+    runner.invoke(gaia.cli, ['find', '--time', time, bucket, folder, keyword])
     path = 'logs/' + bucket
 
     assert os.path.isdir(path) == True

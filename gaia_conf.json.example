@@ -1,8 +1,8 @@
 {
   "BUCKET_PATH":{
-      "jadehanbucket": {
-          "logs":"logs/worker/<YY>/<MM>/<DD>",
-          "logs2":"logs2/worker"
-      }
+    "Bucket_Name" : {
+        "folder1" : "S3/path/<YY>/<MM>/<DD>/<HH>/<MI>/<SC>",
+        "folder2" : "S32/path2"
+    }
   }
 }
