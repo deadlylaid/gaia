@@ -14,7 +14,7 @@ find
 ----
 
 ``gaia_conf.json`` 파일에서 지정된 설정 값을 이용해서 로그를 검색하는 명령어 입니다.
-bucket name과 keyword를 ``argument`` 로 time을 ``option`` 으로 받은 후 명령어를 실행합니다.
+bucket name과 folder, keyword를 ``argument`` 로 time을 ``option`` 으로 받은 후 명령어를 실행합니다.
 time value는 iso 8601 표준을 따르는 UTC 변수만을 지원합니다. 해당 변수는 Bucket Path에 존재하는 날짜 경로에 대응하기 위해 이용되며, 자릿값을 맞추기 위해
 한 자릿수 일 경우 앞에 0을 붙여 표현합니다.
 
