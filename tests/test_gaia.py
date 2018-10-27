@@ -50,18 +50,18 @@ def test_log_finder(keyword):
 
 
 # test_gen은 test_find보다 늦게 실행되므로 gaia_conf.json을 삭제해도 영향을 미치지 않는다.
-@pytest.mark.parametrize('bucket_option, bucket_name, path_option, path_name',(
-        ('--bucket', 'testbucket', '--path', 'testpath'),
-        ('-b', 'testbucket', '-p', 'testpath')
+@pytest.mark.parametrize('key_option, key, path_option, path',(
+        ('--key', 'testbucket', '--path', 'testbucket/test'),
+        ('-k', 'testbucket', '-p', 'testbucket/test')
 ))
-def test_gen(bucket_option, bucket_name, path_option, path_name):
+def test_gen(key_option, key, path_option, path):
     os.system('rm gaia_conf.json')
     runner = CliRunner()
-    runner.invoke(gaia.cli, ['gen', bucket_option, bucket_name, path_option, path_name])
+    runner.invoke(gaia.cli, ['gen', key_option, key, path_option, path])
     assert os.path.isfile('gaia_conf.json') == True
     with open('gaia_conf.json') as f:
         data = json.load(f)
-    assert data == {'BUCKET_PATH': {'testbucket': 'testpath'}}
+    assert data == {'BUCKET_PATH': {'testbucket': 'testbucket/test'}}
 
 
 @pytest.mark.parametrize('time, bucket_path, path_result', (

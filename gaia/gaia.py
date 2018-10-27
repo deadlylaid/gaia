@@ -17,18 +17,18 @@ def cli():
 
 
 @cli.command()
-@click.option('--bucket', '-b')
+@click.option('--key', '-k')
 @click.option('--path', '-p')
-def gen(bucket, path):
+def gen(key, path):
     if not os.path.isfile('gaia_conf.json'):
         with open('gaia_conf.json', 'w') as f:
             json.dump({"BUCKET_PATH": {}}, f)
             click.echo('gaia_conf.json file generated')
 
-    if bucket and path :
+    if key and path :
         with open('gaia_conf.json') as f:
             data = json.load(f)
-        data['BUCKET_PATH'].update({bucket: path})
+        data['BUCKET_PATH'].update({key: path})
         with open('gaia_conf.json', 'w') as f:
             json.dump(data, f)
 
