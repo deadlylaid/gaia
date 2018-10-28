@@ -20,19 +20,21 @@ def teardown_module(module):
         os.rename('gaia_conf.json.real', 'gaia_conf.json')
 
 
-@pytest.mark.parametrize('bucket, folder, keyword, bucket_exist, time', (
-        ('s3', 'folder', 'keyword', True, '2018-09-19'),
-        ('s3', 'folder', 'keyword', True, None),
-        ('undefined', 'undifined', 'keyword', False, '2018-09-09'),
-        ('undefined', 'undifined', 'keyword', False, None),
+@pytest.mark.parametrize('key, keyword, bucket_exist, time, dir_is_exist', (
+        ('test1', 'keyword', True, '2018-09-19', True),
+        ('test2', 'keyword', True, None, True),
+        ('test3', 'keyword', True, None, True),
+        ('test4', 'keyword', True, None, True),
+        ('undefined', 'keyword', False, '2018-09-09', False),
+        ('undefined', 'keyword', False, None, False),
 ))
 @mock.patch('boto3.resource')
-def test_find(mock_resource, bucket, folder, keyword, bucket_exist, time):
+def test_find(mock_resource, key, keyword, bucket_exist, time, dir_is_exist):
     runner = CliRunner()
-    runner.invoke(gaia.cli, ['find', '--time', time, bucket, folder, keyword])
-    path = 'logs/' + bucket
+    runner.invoke(gaia.cli, ['find', '--time', time, key, keyword])
+    path = 'logs/' + key
 
-    assert os.path.isdir(path) == True
+    assert os.path.isdir(path) == dir_is_exist
     if bucket_exist:
         assert mock_resource.called
     else:

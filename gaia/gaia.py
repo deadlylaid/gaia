@@ -34,11 +34,10 @@ def gen(key, path):
 
 
 @cli.command()
-@click.argument('bucket_name')
-@click.argument('folder')
+@click.argument('key')
 @click.argument('keyword')
 @click.option('--time', '-t', default=datetime.utcnow(), help='UTC time like "1990-01-01T12:00:00"')
-def find(bucket_name, folder, keyword, time):
+def find(key, keyword, time):
     try:
         with open('gaia_conf.json') as f:
             config = json.load(f)
@@ -48,15 +47,25 @@ def find(bucket_name, folder, keyword, time):
     if not os.path.isdir('logs'):
         os.mkdir('logs')
 
-    log_dir = 'logs/' + bucket_name + '/'
-    os.mkdir(log_dir)
-
     try:
-        bucket_path = config['BUCKET_PATH'][bucket_name][folder]
+        bucket_path = config['BUCKET_PATH'][key]
     except KeyError:
-        raise KeyError(bucket_name + ' is invalid key please check gaia_conf.json')
+        raise KeyError(key + ' is invalid key please check gaia_conf.json')
+
+    if bucket_path[0] == '/':
+        bucket_path = bucket_path[1:]
+    if bucket_path[-1] == '/':
+        bucket_path = bucket_path[:-1]
+
+    bucket_name = bucket_path.split('/')[0]
+
+    bucket_path = bucket_path.split('/')
+    bucket_path = '/'.join(bucket_path[1:])
 
     bucket_path = _bucket_path(time, bucket_path)
+
+    log_dir = 'logs/' + key + '/'
+    os.mkdir(log_dir)
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(bucket_name)
