@@ -1,8 +1,6 @@
 {
   "BUCKET_PATH":{
-    "Bucket_Name" : {
-        "folder1" : "S3/path/<YY>/<MM>/<DD>/<HH>/<MI>/<SC>",
-        "folder2" : "S32/path2"
-    }
+    "key1" : "S3/path/<YY>/<MM>/<DD>/<HH>/<MI>/<SC>",
+    "key2" : "S32/path2"
   }
 }

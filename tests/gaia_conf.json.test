@@ -1,7 +1,8 @@
 {
   "BUCKET_PATH":{
-    "s3": {
-        "folder": "aws/log/finder"
-    }
+    "test1": "aws/log/finder",
+    "test2": "/aws/log/finder",
+    "test3": "aws/log/finder/",
+    "test4": "/aws/log/finder/"
   }
 }
